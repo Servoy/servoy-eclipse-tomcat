@@ -46,7 +46,7 @@ import org.apache.tomcat.Activator;
 import org.apache.tomcat.OSGIWebappClassLoader;
 import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
-import org.apache.tomcat.websocket.pojo.PojoEndpointServer;
+import org.apache.tomcat.websocket.pojo.Constants;
 import org.apache.tomcat.websocket.pojo.PojoMethodMapping;
 import org.apache.tomcat.websocket.server.DefaultServerEndpointConfigurator;
 
@@ -125,7 +125,7 @@ public class TomcatStartStop
 											sec = ServerEndpointConfig.Builder.create(cls, path).decoders(Arrays.asList(serverEndpoint.decoders())).encoders(
 												Arrays.asList(serverEndpoint.encoders())).subprotocols(
 													Arrays.asList(serverEndpoint.subprotocols())).configurator(configurator).build();
-											sec.getUserProperties().put(PojoEndpointServer.POJO_METHOD_MAPPING_KEY, methodMapping);
+											sec.getUserProperties().put(Constants.POJO_METHOD_MAPPING_KEY, methodMapping);
 
 											serverContainer.addEndpoint(sec);
 										}

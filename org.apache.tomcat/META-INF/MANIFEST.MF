@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tomcat
 Bundle-SymbolicName: org.apache.tomcat;singleton:=true
-Bundle-Version: 8.0.28
+Bundle-Version: 8.5.6
 Bundle-Activator: org.apache.tomcat.Activator
 Bundle-Vendor: Servoy
 Require-Bundle: org.eclipse.core.runtime
@@ -16,6 +16,7 @@ Bundle-ClassPath: lib/annotations-api.jar,
  lib/el-api.jar,
  lib/jasper-el.jar,
  lib/jasper.jar,
+ lib/jaspic-api.jar,
  lib/tomcat-api.jar,
  lib/tomcat-coyote.jar,
  lib/tomcat-dbcp.jar,
@@ -29,7 +30,7 @@ Bundle-ClassPath: lib/annotations-api.jar,
  lib/tomcat-jni.jar,
  lib/tomcat-util-scan.jar,
  lib/tomcat-websocket.jar,
- lib/ecj-4.4.2.jar,
+ lib/ecj-4.5.1.jar,
  .
 Export-Package: org.apache.catalina.servlets,
  org.apache.naming,
