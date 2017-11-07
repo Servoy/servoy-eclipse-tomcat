@@ -12,7 +12,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/catalina-ant.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/catalina-ha.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/catalina-tribes.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/catalina.jar" sourcepath="d:/downloads/apache-tomcat-8.0.14-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/catalina.jar" sourcepath="libsrc/apache-tomcat-8.5.9-src.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/el-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jasper-el.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jasper.jar"/>
