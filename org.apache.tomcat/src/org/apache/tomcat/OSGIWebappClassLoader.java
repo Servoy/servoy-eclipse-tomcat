@@ -27,6 +27,7 @@ import org.osgi.framework.ServiceReference;
  */
 public class OSGIWebappClassLoader extends ClassLoader
 {
+	// should this be an URLClassLoader ? see org.apache.catalina.loader.Webapploader buildClassPath ; should we add the bundles to classpath ?
 	private final CopyOnWriteArrayList<Bundle> usedBundles = new CopyOnWriteArrayList<Bundle>();
 
 	public OSGIWebappClassLoader()
