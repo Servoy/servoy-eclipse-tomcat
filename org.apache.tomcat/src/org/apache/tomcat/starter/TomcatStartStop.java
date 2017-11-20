@@ -212,6 +212,7 @@ public class TomcatStartStop
 			}
 		}
 		catalina.start();
+		System.setProperty("svy.tomcat.started", "true");
 	}
 
 	public static void stop()
