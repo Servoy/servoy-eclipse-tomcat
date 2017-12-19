@@ -65,6 +65,8 @@ public class TomcatStartStop
 		System.setProperty("catalina.base", dir);
 
 		catalina = new Catalina();
+		String file = System.getProperty("webserver-file", null);
+		if (file != null) catalina.setConfigFile(dir + "/conf/" + file);
 		catalina.setParentClassLoader(new OSGIWebappClassLoader(TomcatStartStop.class.getClassLoader()));
 		catalina.load();
 		Service[] services = catalina.getServer().findServices();
