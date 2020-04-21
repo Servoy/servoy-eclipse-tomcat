@@ -50,3 +50,4 @@ Import-Package: javax.servlet,
  javax.websocket,
  javax.websocket.server,
  org.osgi.framework
+Automatic-Module-Name: org.apache.tomcat
