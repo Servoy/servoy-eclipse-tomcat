@@ -2,5 +2,5 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="serviceprovider" name="Servlet Filter Websocket provider" schema="schema/serviceprovider.exsd"/>
-
+   <extension-point id="tomcatstartedlistener" name="Tomcat started listener" schema="schema/tomcatstartedlistener.exsd"/>
 </plugin>

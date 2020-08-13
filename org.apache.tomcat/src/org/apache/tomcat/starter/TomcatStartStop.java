@@ -126,7 +126,8 @@ public class TomcatStartStop
 											}
 											sec = ServerEndpointConfig.Builder.create(cls, path).decoders(Arrays.asList(serverEndpoint.decoders())).encoders(
 												Arrays.asList(serverEndpoint.encoders())).subprotocols(
-													Arrays.asList(serverEndpoint.subprotocols())).configurator(configurator).build();
+													Arrays.asList(serverEndpoint.subprotocols()))
+												.configurator(configurator).build();
 											sec.getUserProperties().put(Constants.POJO_METHOD_MAPPING_KEY, methodMapping);
 
 											serverContainer.addEndpoint(sec);
@@ -214,6 +215,7 @@ public class TomcatStartStop
 			}
 		}
 		catalina.start();
+		Activator.getActivator().getStartedListeners().forEach(listener -> listener.started());
 		System.setProperty("svy.tomcat.started", "true");
 	}
 

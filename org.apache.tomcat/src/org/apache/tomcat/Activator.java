@@ -16,10 +16,12 @@
 
 package org.apache.tomcat;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.tomcat.starter.IServicesProvider;
+import org.apache.tomcat.starter.ITomcatStartedListener;
 import org.apache.tomcat.starter.TomcatStartStop;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -37,6 +39,7 @@ public class Activator implements BundleActivator
 	private static Activator self;
 
 	private final Set<IServicesProvider> serviceProviders = new HashSet<IServicesProvider>();
+	private final Set<ITomcatStartedListener> startedListeners = new HashSet<ITomcatStartedListener>();
 	private BundleContext context;
 
 	public static Activator getActivator()
@@ -51,7 +54,7 @@ public class Activator implements BundleActivator
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext bundleContext) throws Exception
@@ -71,6 +74,17 @@ public class Activator implements BundleActivator
 				serviceProviders.add(provider);
 			}
 		}
+
+		ep = reg.getExtensionPoint(ITomcatStartedListener.EXTENSION_ID);
+		extensions = ep.getExtensions();
+		if (extensions != null && extensions.length > 0)
+		{
+			for (IExtension extension : extensions)
+			{
+				ITomcatStartedListener startedListener = (ITomcatStartedListener)extension.getConfigurationElements()[0].createExecutableExtension("class");
+				startedListeners.add(startedListener);
+			}
+		}
 	}
 
 	public Set<Class< ? >> getAnnotatedClasses(String ctx)
@@ -84,9 +98,17 @@ public class Activator implements BundleActivator
 		return classes;
 	}
 
+	/**
+	 * @return the startedListeners
+	 */
+	public Set<ITomcatStartedListener> getStartedListeners()
+	{
+		return Collections.unmodifiableSet(startedListeners);
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception
