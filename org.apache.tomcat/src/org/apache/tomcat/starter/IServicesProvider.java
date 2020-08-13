@@ -26,7 +26,12 @@ public interface IServicesProvider
 {
 	static final String EXTENSION_ID = "org.apache.tomcat.serviceprovider";
 
-	void registerServices();
+	default void registerServices()
+	{
+	}
 
-	Set<Class< ? >> getAnnotatedClasses(String context);
+	default Set<Class< ? >> getAnnotatedClasses(String context)
+	{
+		return null;
+	}
 }
