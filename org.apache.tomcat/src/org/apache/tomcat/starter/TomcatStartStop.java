@@ -23,7 +23,6 @@ import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletRegistration.Dynamic;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -190,12 +189,17 @@ public class TomcatStartStop
 													wrapper.setServletClass(cls.getName());
 													wrapper.setServlet(servlet);
 													sc.addChild(wrapper);
-													Dynamic servletConfig = sc.dynamicServletAdded(wrapper);
-													servletConfig.addMapping(webServlet.urlPatterns());
-													servletConfig.addMapping(webServlet.value());
+													for (String mapping : webServlet.urlPatterns())
+													{
+														wrapper.addMapping(mapping);
+													}
+													for (String mapping : webServlet.value())
+													{
+														wrapper.addMapping(mapping);
+													}
 													for (WebInitParam param : webServlet.initParams())
 													{
-														servletConfig.setInitParameter(param.name(), param.value());
+														wrapper.addInitParameter(param.name(), param.value());
 													}
 												}
 												catch (Exception e)

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tomcat
 Bundle-SymbolicName: org.apache.tomcat;singleton:=true
-Bundle-Version: 8.5.64
+Bundle-Version: 9.0.50
 Bundle-Activator: org.apache.tomcat.Activator
 Bundle-Vendor: Servoy
 Require-Bundle: org.eclipse.core.runtime
@@ -39,15 +39,14 @@ Bundle-ClassPath: .,
 Export-Package: org.apache.catalina.servlets,
  org.apache.naming,
  org.apache.tomcat.starter
-Import-Package: javax.servlet,
- javax.servlet.annotation,
- javax.servlet.descriptor,
- javax.servlet.http,
- javax.servlet.jsp,
- javax.servlet.jsp.el,
- javax.servlet.jsp.resources,
- javax.servlet.jsp.tagext,
- javax.websocket,
- javax.websocket.server,
+Import-Package: javax.servlet;version="[4.0.0,5.0.0)",
+ javax.servlet.annotation;version="[4.0.0,5.0.0)",
+ javax.servlet.descriptor;version="[4.0.0,5.0.0)",
+ javax.servlet.http;version="[4.0.0,5.0.0)",
+ javax.servlet.jsp;version="[2.3.0,3.0.0)",
+ javax.servlet.jsp.el;version="[2.3.0,3.0.0)",
+ javax.servlet.jsp.tagext;version="[2.3.0,3.0.0)",
+ javax.websocket;version="[1.1.0,2.0.0)",
+ javax.websocket.server;version="[1.1.0,2.0.0)",
  org.osgi.framework
 Automatic-Module-Name: org.apache.tomcat

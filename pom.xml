@@ -5,18 +5,18 @@
 	<artifactId>eclipse.tomcat</artifactId>
 	<groupId>com.servoy</groupId>
 	<packaging>pom</packaging>
-	<version>8.5.64</version>
+	<version>9.0.50</version>
 
 	<prerequisites>
 		<maven>3.6.3</maven>
 	</prerequisites>
 
 	<properties>
-		<tycho.version>2.3.0</tycho.version>
+		<tycho.version>2.4.0</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<servoy.version>2021.6.0.3680_rc</servoy.version>
+		<servoy.version>2021.9.0.3700_rc</servoy.version>
 	</properties>
 
 	<build>
@@ -72,19 +72,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.eclipse.tycho.extras</groupId>
-				<artifactId>tycho-pack200a-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<executions>
-					<execution>
-						<id>pack200-normalize</id>
-						<goals>
-							<goal>normalize</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jarsigner-plugin</artifactId>
 				<version>1.4</version>
@@ -93,19 +80,6 @@
 						<id>sign</id>
 						<goals>
 							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho.extras</groupId>
-				<artifactId>tycho-pack200b-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<executions>
-					<execution>
-						<id>pack200-pack</id>
-						<goals>
-							<goal>pack</goal>
 						</goals>
 					</execution>
 				</executions>
