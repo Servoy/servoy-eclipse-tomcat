@@ -35,7 +35,7 @@ Bundle-ClassPath: .,
  lib/tomcat-i18n-ko.jar,
  lib/tomcat-i18n-ru.jar,
  lib/tomcat-i18n-zh-CN.jar,
- lib/ecj-4.6.3.jar
+ lib/ecj-4.20.jar
 Export-Package: org.apache.catalina.servlets,
  org.apache.naming,
  org.apache.tomcat.starter
