@@ -5,7 +5,7 @@
 	<artifactId>eclipse.tomcat</artifactId>
 	<groupId>com.servoy</groupId>
 	<packaging>pom</packaging>
-	<version>9.0.50</version>
+	<version>9.0.69</version>
 
 	<prerequisites>
 		<maven>3.8.6</maven>
