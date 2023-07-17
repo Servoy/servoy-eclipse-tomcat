@@ -5,18 +5,18 @@
 	<artifactId>eclipse.tomcat</artifactId>
 	<groupId>com.servoy</groupId>
 	<packaging>pom</packaging>
-	<version>9.0.50</version>
+	<version>9.0.69</version>
 
 	<prerequisites>
-		<maven>3.6.3</maven>
+		<maven>3.8.6</maven>
 	</prerequisites>
 
 	<properties>
-		<tycho.version>2.6.0</tycho.version>
+		<tycho.version>2.7.5</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<servoy.version>2022.3.3.3745_LTS</servoy.version>
+		<servoy.version>2023.3.0.3840_rc</servoy.version>
 	</properties>
 
 	<build>
