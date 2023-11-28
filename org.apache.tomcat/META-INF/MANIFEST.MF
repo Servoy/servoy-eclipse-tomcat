@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tomcat
 Bundle-SymbolicName: org.apache.tomcat;singleton:=true
-Bundle-Version: 9.0.69
+Bundle-Version: 9.0.83
 Bundle-Activator: org.apache.tomcat.Activator
 Bundle-Vendor: Servoy
 Require-Bundle: org.eclipse.core.runtime
