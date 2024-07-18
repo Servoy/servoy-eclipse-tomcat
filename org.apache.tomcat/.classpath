@@ -4,14 +4,13 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="lib" path="lib/annotations-api.jar"/>
-	<classpathentry kind="lib" path="lib/catalina.jar" sourcepath="libsrc/apache-tomcat-9.0.50-src.zip"/>
+	<classpathentry kind="lib" path="lib/catalina.jar" sourcepath="libsrc/apache-tomcat-9.0.69-src.zip"/>
 	<classpathentry kind="lib" path="lib/catalina-ant.jar"/>
 	<classpathentry kind="lib" path="lib/catalina-ha.jar"/>
 	<classpathentry kind="lib" path="lib/catalina-ssi.jar"/>
 	<classpathentry kind="lib" path="lib/catalina-storeconfig.jar"/>
 	<classpathentry kind="lib" path="lib/catalina-tribes.jar"/>
 	<classpathentry kind="lib" path="lib/ecj-4.20.jar"/>
-	<classpathentry kind="lib" path="lib/el-api.jar"/>
 	<classpathentry kind="lib" path="lib/jasper.jar"/>
 	<classpathentry kind="lib" path="lib/jasper-el.jar"/>
 	<classpathentry kind="lib" path="lib/jaspic-api.jar"/>
