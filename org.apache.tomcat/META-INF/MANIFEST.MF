@@ -6,7 +6,7 @@ Bundle-Version: 9.0.91
 Bundle-Activator: org.apache.tomcat.Activator
 Bundle-Vendor: Servoy
 Require-Bundle: org.eclipse.core.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  lib/annotations-api.jar,
