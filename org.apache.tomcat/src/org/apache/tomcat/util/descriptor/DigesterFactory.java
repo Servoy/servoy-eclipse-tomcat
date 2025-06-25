@@ -21,14 +21,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.digester.Digester;
 import org.apache.tomcat.util.digester.RuleSet;
 import org.apache.tomcat.util.res.StringManager;
 import org.xml.sax.ext.EntityResolver2;
+
+import jakarta.servlet.ServletContext;
 
 /**
  * Wrapper class around the Digester that hide Digester's initialization

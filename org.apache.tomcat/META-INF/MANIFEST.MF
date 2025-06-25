@@ -2,16 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tomcat
 Bundle-SymbolicName: org.apache.tomcat;singleton:=true
-Bundle-Version: 9.0.91
+Bundle-Version: 11.0.8
 Bundle-Activator: org.apache.tomcat.Activator
 Bundle-Vendor: Servoy
 Require-Bundle: org.eclipse.core.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  lib/annotations-api.jar,
  lib/catalina-ant.jar,
  lib/catalina-ha.jar,
+ lib/catalina-ssi.jar,
+ lib/catalina-storeconfig.jar,
  lib/catalina-tribes.jar,
  lib/catalina.jar,
  lib/jasper-el.jar,
@@ -23,41 +25,45 @@ Bundle-ClassPath: .,
  lib/tomcat-i18n-es.jar,
  lib/tomcat-i18n-fr.jar,
  lib/tomcat-i18n-ja.jar,
- lib/tomcat-jdbc.jar,
- lib/tomcat-util.jar,
- lib/tomcat-juli.jar,
- lib/catalina-storeconfig.jar,
- lib/tomcat-jni.jar,
- lib/tomcat-util-scan.jar,
- lib/tomcat-websocket.jar,
  lib/tomcat-i18n-de.jar,
  lib/tomcat-i18n-ko.jar,
  lib/tomcat-i18n-ru.jar,
  lib/tomcat-i18n-zh-CN.jar,
- lib/ecj-4.20.jar
-Export-Package: org.apache.catalina.servlets;version="9.0.83",
- org.apache.jasper.servlet;version="9.0.83";
-  uses:="javax.servlet.http,
+ lib/tomcat-i18n-cs.jar,
+ lib/tomcat-i18n-pt-BR.jar,
+ lib/tomcat-jdbc.jar,
+ lib/tomcat-util.jar,
+ lib/tomcat-juli.jar,
+ lib/tomcat-jni.jar,
+ lib/tomcat-util-scan.jar,
+ lib/tomcat-websocket.jar,
+ lib/tomcat-coyote-ffm.jar,
+ lib/ecj-4.35.jar,
+ lib/jakartaee-migration-1.0.9-shaded.jar
+Export-Package: org.apache.catalina.servlets;version="11.0.8",
+ org.apache.jasper.servlet;version="11.0.8";
+  uses:="jakarta.servlet.http,
    org.apache.tomcat.util.descriptor.tld,
-   javax.servlet.jsp.tagext,
+   jakarta.servlet.jsp.tagext,
    org.apache.jasper,
    org.apache.juli.logging,
-   javax.servlet,
+   jakarta.servlet,
    org.apache.tomcat,
-   javax.servlet.descriptor,
+   jakarta.servlet.descriptor,
    org.apache.jasper.compiler,
    org.apache.jasper.util",
- org.apache.naming;version="9.0.83",
- org.apache.tomcat.starter;version="9.0.83";uses:="org.osgi.framework"
-Import-Package: javax.el;version="[3.0.0,4.0.0]",
- javax.servlet;version="[4.0.0,5.0.0)",
- javax.servlet.annotation;version="[4.0.0,5.0.0)",
- javax.servlet.descriptor;version="[4.0.0,5.0.0)",
- javax.servlet.http;version="[4.0.0,5.0.0)",
- javax.servlet.jsp;version="[2.3.0,3.0.0)",
- javax.servlet.jsp.el;version="[2.3.0,3.0.0)",
- javax.servlet.jsp.tagext;version="[2.3.0,3.0.0)",
- javax.websocket;version="[1.1.0,2.0.0)",
- javax.websocket.server;version="[1.1.0,2.0.0)",
+ org.apache.naming;version="11.0.8",
+ org.apache.tomcat.starter;version="11.0.8";uses:="org.osgi.framework"
+Import-Package: jakarta.el;version="[6.0.0,7.0.0)",
+ jakarta.servlet;version="[6.1.0,7.0.0)",
+ jakarta.servlet.annotation;version="[6.1.0,7.0.0)",
+ jakarta.servlet.descriptor;version="[6.1.0,7.0.0)",
+ jakarta.servlet.http;version="[6.1.0,7.0.0)",
+ jakarta.servlet.jsp;version="[4.0.0,5.0.0)",
+ jakarta.servlet.jsp.el;version="[4.0.0,5.0.0)",
+ jakarta.servlet.jsp.tagext;version="[4.0.0,5.0.0)",
+ jakarta.servlet.resources;version="[6.1.0,7.0.0)",
+ jakarta.websocket;version="[2.2.0,3.0.0)",
+ jakarta.websocket.server;version="[2.2.0,3.0.0)",
  org.osgi.framework
 Automatic-Module-Name: org.apache.tomcat

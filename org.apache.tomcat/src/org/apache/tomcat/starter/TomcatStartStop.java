@@ -16,21 +16,9 @@
 
 package org.apache.tomcat.starter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Set;
-
-import javax.servlet.DispatcherType;
-import javax.servlet.Filter;
-import javax.servlet.Servlet;
-import javax.servlet.ServletContext;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
-import javax.servlet.annotation.WebServlet;
-import javax.websocket.DeploymentException;
-import javax.websocket.server.ServerContainer;
-import javax.websocket.server.ServerEndpoint;
-import javax.websocket.server.ServerEndpointConfig;
-import javax.websocket.server.ServerEndpointConfig.Configurator;
 
 import org.apache.catalina.Container;
 import org.apache.catalina.Lifecycle;
@@ -48,6 +36,20 @@ import org.apache.tomcat.util.descriptor.web.FilterMap;
 import org.apache.tomcat.websocket.pojo.Constants;
 import org.apache.tomcat.websocket.pojo.PojoMethodMapping;
 import org.apache.tomcat.websocket.server.DefaultServerEndpointConfigurator;
+
+import jakarta.servlet.DispatcherType;
+import jakarta.servlet.Filter;
+import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.annotation.WebInitParam;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.websocket.DeploymentException;
+import jakarta.websocket.server.ServerContainer;
+import jakarta.websocket.server.ServerEndpoint;
+import jakarta.websocket.server.ServerEndpointConfig;
+import jakarta.websocket.server.ServerEndpointConfig.Configurator;
+
 
 /**
  * Actual tomcat starter.
@@ -89,7 +91,7 @@ public class TomcatStartStop
 								StandardContext sc = (StandardContext)container;
 								sc.filterStop();
 								ServletContext context = sc.getServletContext();
-								ServerContainer serverContainer = (ServerContainer)context.getAttribute("javax.websocket.server.ServerContainer");
+								ServerContainer serverContainer = (ServerContainer)context.getAttribute("jakarta.websocket.server.ServerContainer");
 								Set<Class< ? >> annotatedClasses = Activator.getActivator().getAnnotatedClasses(context.getContextPath());
 								for (Class< ? > cls : annotatedClasses)
 								{
@@ -101,7 +103,8 @@ public class TomcatStartStop
 											String path = serverEndpoint.value();
 
 											// Method mapping
-											PojoMethodMapping methodMapping = new PojoMethodMapping(cls, Arrays.asList(serverEndpoint.decoders()), path);
+											PojoMethodMapping methodMapping = new PojoMethodMapping(cls, Arrays.asList(serverEndpoint.decoders()), path,
+												sc.getInstanceManager());
 
 											// ServerEndpointConfig
 											ServerEndpointConfig sec;
@@ -113,13 +116,10 @@ public class TomcatStartStop
 											}
 											try
 											{
-												configurator = configuratorClazz.newInstance();
+												configurator = configuratorClazz.getDeclaredConstructor().newInstance();
 											}
-											catch (InstantiationException e)
-											{
-												throw new DeploymentException("serverContainer.configuratorFail", e);
-											}
-											catch (IllegalAccessException e)
+											catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+												| NoSuchMethodException | SecurityException e)
 											{
 												throw new DeploymentException("serverContainer.configuratorFail", e);
 											}
@@ -145,7 +145,7 @@ public class TomcatStartStop
 											if (name == null || name.equals("")) name = cls.getName();
 											try
 											{
-												Filter filter = (Filter)cls.newInstance();
+												Filter filter = (Filter)cls.getDeclaredConstructor().newInstance();
 												FilterDef filterDef = new FilterDef();
 												filterDef.setFilterName(name);
 												filterDef.setFilter(filter);
@@ -183,7 +183,7 @@ public class TomcatStartStop
 												if (name == null || name.equals("")) name = cls.getName();
 												try
 												{
-													Servlet servlet = (Servlet)cls.newInstance();
+													Servlet servlet = (Servlet)cls.getDeclaredConstructor().newInstance();
 													Wrapper wrapper = sc.createWrapper();
 													wrapper.setName(name);
 													wrapper.setServletClass(cls.getName());
