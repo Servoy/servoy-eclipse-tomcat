@@ -14,9 +14,9 @@
 	<properties>
 		<tycho.version>4.0.12</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<servoy.version>2025.6.0.4080_rc</servoy.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<servoy.version>2025.9.0.4100_rc</servoy.version>
 	</properties>
 
 	<build>
