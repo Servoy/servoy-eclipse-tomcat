@@ -92,6 +92,26 @@ public class TomcatStartStop
 								sc.filterStop();
 								ServletContext context = sc.getServletContext();
 								ServerContainer serverContainer = (ServerContainer)context.getAttribute("jakarta.websocket.server.ServerContainer");
+								Set<ServletInstance> servletInstances = Activator.getActivator().getServletInstances(context.getContextPath());
+								for (ServletInstance servletInstance : servletInstances)
+								{
+									try
+									{
+										Servlet servlet = servletInstance.getServletInstance();
+										Wrapper wrapper = sc.createWrapper();
+										wrapper.setName(servlet.getClass().getSimpleName());
+										wrapper.setServletClass(servlet.getClass().getName());
+										wrapper.setServlet(servlet);
+										wrapper.setAsyncSupported(true);
+										sc.addChild(wrapper);
+										wrapper.addMapping(servletInstance.getUrlPattern());
+									}
+									catch (Exception e)
+									{
+										e.printStackTrace();
+									}
+								}
+
 								Set<Class< ? >> annotatedClasses = Activator.getActivator().getAnnotatedClasses(context.getContextPath());
 								for (Class< ? > cls : annotatedClasses)
 								{

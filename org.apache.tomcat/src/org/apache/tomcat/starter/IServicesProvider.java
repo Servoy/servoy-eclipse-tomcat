@@ -30,7 +30,18 @@ public interface IServicesProvider
 	{
 	}
 
+	/**
+	 * @param context The context that is being configured
+	 */
 	default Set<Class< ? >> getAnnotatedClasses(String context)
+	{
+		return null;
+	}
+
+	/**
+	 * @param context The context that is being configured
+	 */
+	default Set<ServletInstance> getServletInstances(String context)
 	{
 		return null;
 	}

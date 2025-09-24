@@ -22,6 +22,7 @@ import java.util.Set;
 
 import org.apache.tomcat.starter.IServicesProvider;
 import org.apache.tomcat.starter.ITomcatStartedListener;
+import org.apache.tomcat.starter.ServletInstance;
 import org.apache.tomcat.starter.TomcatStartStop;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -99,6 +100,21 @@ public class Activator implements BundleActivator
 	}
 
 	/**
+	 * @param contextPath
+	 */
+	public Set<ServletInstance> getServletInstances(String ctx)
+	{
+		Set<ServletInstance> instances = new HashSet<ServletInstance>();
+		for (IServicesProvider serviceProvider : serviceProviders)
+		{
+			Set<ServletInstance> spInstances = serviceProvider.getServletInstances(ctx);
+			if (spInstances != null) instances.addAll(spInstances);
+		}
+		return instances;
+
+	}
+
+	/**
 	 * @return the startedListeners
 	 */
 	public Set<ITomcatStartedListener> getStartedListeners()
@@ -117,4 +133,5 @@ public class Activator implements BundleActivator
 		context = null;
 		self = null;
 	}
+
 }
