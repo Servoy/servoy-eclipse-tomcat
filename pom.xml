@@ -16,7 +16,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<servoy.version>2024.9.0.4000_rc</servoy.version>
+		<servoy.version>2025.3.2.4044_LTS</servoy.version>
 	</properties>
 
 	<build>
