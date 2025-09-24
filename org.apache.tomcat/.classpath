@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="lib" path="lib/annotations-api.jar"/>
-	<classpathentry kind="lib" path="lib/catalina.jar" sourcepath="libsrc/apache-tomcat-9.0.91-src.zip"/>
+	<classpathentry kind="lib" path="lib/catalina.jar" sourcepath="libsrc/apache-tomcat-11.0.11-src.zip"/>
 	<classpathentry kind="lib" path="lib/catalina-ant.jar"/>
 	<classpathentry kind="lib" path="lib/catalina-ha.jar"/>
 	<classpathentry kind="lib" path="lib/catalina-ssi.jar"/>
@@ -29,9 +29,9 @@
 	<classpathentry kind="lib" path="lib/tomcat-jni.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat-juli.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat-util.jar"/>
-	<classpathentry kind="lib" path="lib/tomcat-util-scan.jar" sourcepath="libsrc/apache-tomcat-9.0.91-src.zip"/>
+	<classpathentry kind="lib" path="lib/tomcat-util-scan.jar" sourcepath="libsrc/apache-tomcat-11.0.11-src.zip"/>
 	<classpathentry kind="lib" path="lib/tomcat-websocket.jar"/>
-	<classpathentry kind="lib" path="lib/ecj-4.35.jar"/>
+	<classpathentry kind="lib" path="lib/ecj-4.36.jar"/>
 	<classpathentry kind="lib" path="lib/jakartaee-migration-1.0.9-shaded.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat-coyote-ffm.jar"/>
 	<classpathentry kind="output" path="bin"/>
