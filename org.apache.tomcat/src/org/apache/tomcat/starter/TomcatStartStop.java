@@ -84,154 +84,164 @@ public class TomcatStartStop
 					{
 						if (event.getType() == Lifecycle.AFTER_START_EVENT)
 						{
-							Container host = (Container)event.getSource();
-							Container[] contexts = host.findChildren();
-							for (Container container : contexts)
+							try
 							{
-								StandardContext sc = (StandardContext)container;
-								sc.filterStop();
-								ServletContext context = sc.getServletContext();
-								ServerContainer serverContainer = (ServerContainer)context.getAttribute("jakarta.websocket.server.ServerContainer");
-								Set<ServletInstance> servletInstances = Activator.getActivator().getServletInstances(context.getContextPath());
-								for (ServletInstance servletInstance : servletInstances)
+								Container host = (Container)event.getSource();
+								Container[] contexts = host.findChildren();
+								for (Container container : contexts)
 								{
-									try
-									{
-										Servlet servlet = servletInstance.getServletInstance();
-										Wrapper wrapper = sc.createWrapper();
-										wrapper.setName(servlet.getClass().getSimpleName());
-										wrapper.setServletClass(servlet.getClass().getName());
-										wrapper.setServlet(servlet);
-										wrapper.setAsyncSupported(true);
-										sc.addChild(wrapper);
-										wrapper.addMapping(servletInstance.getUrlPattern());
-									}
-									catch (Exception e)
-									{
-										e.printStackTrace();
-									}
-								}
-
-								Set<Class< ? >> annotatedClasses = Activator.getActivator().getAnnotatedClasses(context.getContextPath());
-								for (Class< ? > cls : annotatedClasses)
-								{
-									ServerEndpoint serverEndpoint = cls.getAnnotation(ServerEndpoint.class);
-									if (serverEndpoint != null)
+									StandardContext sc = (StandardContext)container;
+									sc.filterStop();
+									ServletContext context = sc.getServletContext();
+									ServerContainer serverContainer = (ServerContainer)context.getAttribute("jakarta.websocket.server.ServerContainer");
+									Set<ServletInstance> servletInstances = Activator.getActivator().getServletInstances(context.getContextPath());
+									for (ServletInstance servletInstance : servletInstances)
 									{
 										try
 										{
-											String path = serverEndpoint.value();
-
-											// Method mapping
-											PojoMethodMapping methodMapping = new PojoMethodMapping(cls, Arrays.asList(serverEndpoint.decoders()), path,
-												sc.getInstanceManager());
-
-											// ServerEndpointConfig
-											ServerEndpointConfig sec;
-											Class< ? extends Configurator> configuratorClazz = serverEndpoint.configurator();
-											Configurator configurator = null;
-											if (configuratorClazz.equals(Configurator.class))
-											{
-												configuratorClazz = DefaultServerEndpointConfigurator.class;
-											}
-											try
-											{
-												configurator = configuratorClazz.getDeclaredConstructor().newInstance();
-											}
-											catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-												| NoSuchMethodException | SecurityException e)
-											{
-												throw new DeploymentException("serverContainer.configuratorFail", e);
-											}
-											sec = ServerEndpointConfig.Builder.create(cls, path).decoders(Arrays.asList(serverEndpoint.decoders())).encoders(
-												Arrays.asList(serverEndpoint.encoders())).subprotocols(
-													Arrays.asList(serverEndpoint.subprotocols()))
-												.configurator(configurator).build();
-											sec.getUserProperties().put(Constants.POJO_METHOD_MAPPING_KEY, methodMapping);
-
-											serverContainer.addEndpoint(sec);
+											Servlet servlet = servletInstance.getServletInstance();
+											Wrapper wrapper = sc.createWrapper();
+											wrapper.setName(servlet.getClass().getSimpleName());
+											wrapper.setServletClass(servlet.getClass().getName());
+											wrapper.setServlet(servlet);
+											wrapper.setAsyncSupported(true);
+											sc.addChild(wrapper);
+											wrapper.addMapping(servletInstance.getUrlPattern());
 										}
-										catch (DeploymentException e)
+										catch (Exception e)
 										{
 											e.printStackTrace();
 										}
 									}
-									else
+
+									Set<Class< ? >> annotatedClasses = Activator.getActivator().getAnnotatedClasses(context.getContextPath());
+									for (Class< ? > cls : annotatedClasses)
 									{
-										WebFilter webFilter = cls.getAnnotation(WebFilter.class);
-										if (webFilter != null)
+										ServerEndpoint serverEndpoint = cls.getAnnotation(ServerEndpoint.class);
+										if (serverEndpoint != null)
 										{
-											String name = webFilter.filterName();
-											if (name == null || name.equals("")) name = cls.getName();
 											try
 											{
-												Filter filter = (Filter)cls.getDeclaredConstructor().newInstance();
-												FilterDef filterDef = new FilterDef();
-												filterDef.setFilterName(name);
-												filterDef.setFilter(filter);
-												filterDef.setFilterClass(cls.getName());
-												for (WebInitParam param : webFilter.initParams())
+												String path = serverEndpoint.value();
+
+												// Method mapping
+												PojoMethodMapping methodMapping = new PojoMethodMapping(cls, Arrays.asList(serverEndpoint.decoders()), path,
+													sc.getInstanceManager());
+
+												// ServerEndpointConfig
+												ServerEndpointConfig sec;
+												Class< ? extends Configurator> configuratorClazz = serverEndpoint.configurator();
+												Configurator configurator = null;
+												if (configuratorClazz.equals(Configurator.class))
 												{
-													filterDef.addInitParameter(param.name(), param.value());
+													configuratorClazz = DefaultServerEndpointConfigurator.class;
 												}
-												sc.addFilterDef(filterDef);
-												FilterMap map = new FilterMap();
-												for (DispatcherType type : webFilter.dispatcherTypes())
+												try
 												{
-													map.setDispatcher(type.name());
+													configurator = configuratorClazz.getDeclaredConstructor().newInstance();
 												}
-												map.setFilterName(name);
-												String[] urlPatterns = webFilter.urlPatterns();
-												for (String urlPattern : urlPatterns)
+												catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+													| NoSuchMethodException | SecurityException e)
 												{
-													map.addURLPattern(urlPattern);
+													throw new DeploymentException("serverContainer.configuratorFail", e);
 												}
-												sc.addFilterMap(map);
+												sec = ServerEndpointConfig.Builder.create(cls, path).decoders(Arrays.asList(serverEndpoint.decoders()))
+													.encoders(
+														Arrays.asList(serverEndpoint.encoders()))
+													.subprotocols(
+														Arrays.asList(serverEndpoint.subprotocols()))
+													.configurator(configurator).build();
+												sec.getUserProperties().put(Constants.POJO_METHOD_MAPPING_KEY, methodMapping);
+
+												serverContainer.addEndpoint(sec);
 											}
-											catch (Exception e)
+											catch (DeploymentException e)
 											{
 												e.printStackTrace();
 											}
-
 										}
 										else
 										{
-											WebServlet webServlet = cls.getAnnotation(WebServlet.class);
-											if (webServlet != null)
+											WebFilter webFilter = cls.getAnnotation(WebFilter.class);
+											if (webFilter != null)
 											{
-												String name = webServlet.name();
+												String name = webFilter.filterName();
 												if (name == null || name.equals("")) name = cls.getName();
 												try
 												{
-													Servlet servlet = (Servlet)cls.getDeclaredConstructor().newInstance();
-													Wrapper wrapper = sc.createWrapper();
-													wrapper.setName(name);
-													wrapper.setServletClass(cls.getName());
-													wrapper.setServlet(servlet);
-													sc.addChild(wrapper);
-													for (String mapping : webServlet.urlPatterns())
+													Filter filter = (Filter)cls.getDeclaredConstructor().newInstance();
+													FilterDef filterDef = new FilterDef();
+													filterDef.setFilterName(name);
+													filterDef.setFilter(filter);
+													filterDef.setFilterClass(cls.getName());
+													for (WebInitParam param : webFilter.initParams())
 													{
-														wrapper.addMapping(mapping);
+														filterDef.addInitParameter(param.name(), param.value());
 													}
-													for (String mapping : webServlet.value())
+													sc.addFilterDef(filterDef);
+													FilterMap map = new FilterMap();
+													for (DispatcherType type : webFilter.dispatcherTypes())
 													{
-														wrapper.addMapping(mapping);
+														map.setDispatcher(type.name());
 													}
-													for (WebInitParam param : webServlet.initParams())
+													map.setFilterName(name);
+													String[] urlPatterns = webFilter.urlPatterns();
+													for (String urlPattern : urlPatterns)
 													{
-														wrapper.addInitParameter(param.name(), param.value());
+														map.addURLPattern(urlPattern);
 													}
+													sc.addFilterMap(map);
 												}
 												catch (Exception e)
 												{
 													e.printStackTrace();
 												}
+
+											}
+											else
+											{
+												WebServlet webServlet = cls.getAnnotation(WebServlet.class);
+												if (webServlet != null)
+												{
+													String name = webServlet.name();
+													if (name == null || name.equals("")) name = cls.getName();
+													try
+													{
+														Servlet servlet = (Servlet)cls.getDeclaredConstructor().newInstance();
+														Wrapper wrapper = sc.createWrapper();
+														wrapper.setName(name);
+														wrapper.setServletClass(cls.getName());
+														wrapper.setServlet(servlet);
+														sc.addChild(wrapper);
+														for (String mapping : webServlet.urlPatterns())
+														{
+															wrapper.addMapping(mapping);
+														}
+														for (String mapping : webServlet.value())
+														{
+															wrapper.addMapping(mapping);
+														}
+														for (WebInitParam param : webServlet.initParams())
+														{
+															wrapper.addInitParameter(param.name(), param.value());
+														}
+													}
+													catch (Exception e)
+													{
+														e.printStackTrace();
+													}
+												}
 											}
 										}
-									}
 
+									}
+									sc.filterStart();
 								}
-								sc.filterStart();
+							}
+							catch (Throwable e1)
+							{
+								e1.printStackTrace();
+								throw new RuntimeException(e1);
 							}
 						}
 					}
