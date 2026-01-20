@@ -35,8 +35,8 @@ Bundle-ClassPath: .,
  lib/tomcat-i18n-ru.jar,
  lib/tomcat-i18n-zh-CN.jar,
  lib/ecj-4.20.jar
-Export-Package: org.apache.catalina.servlets;version="9.0.83",
- org.apache.jasper.servlet;version="9.0.83";
+Export-Package: org.apache.catalina.servlets;version="9.0.86",
+ org.apache.jasper.servlet;version="9.0.86";
   uses:="javax.servlet.http,
    org.apache.tomcat.util.descriptor.tld,
    javax.servlet.jsp.tagext,
@@ -47,8 +47,8 @@ Export-Package: org.apache.catalina.servlets;version="9.0.83",
    javax.servlet.descriptor,
    org.apache.jasper.compiler,
    org.apache.jasper.util",
- org.apache.naming;version="9.0.83",
- org.apache.tomcat.starter;version="9.0.83";uses:="org.osgi.framework"
+ org.apache.naming;version="9.0.86",
+ org.apache.tomcat.starter;version="9.0.86";uses:="org.osgi.framework"
 Import-Package: javax.el;version="[3.0.0,4.0.0]",
  javax.servlet;version="[4.0.0,5.0.0)",
  javax.servlet.annotation;version="[4.0.0,5.0.0)",
