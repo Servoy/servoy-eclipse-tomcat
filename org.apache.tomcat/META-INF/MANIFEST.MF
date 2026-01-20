@@ -38,7 +38,7 @@ Bundle-ClassPath: .,
  lib/tomcat-util-scan.jar,
  lib/tomcat-websocket.jar,
  lib/tomcat-coyote-ffm.jar,
- lib/ecj-4.35.jar,
+ lib/ecj-4.36.jar,
  lib/jakartaee-migration-1.0.9-shaded.jar
 Export-Package: org.apache.catalina,
  org.apache.catalina.servlets;version="11.0.8",
