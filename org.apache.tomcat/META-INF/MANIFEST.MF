@@ -40,8 +40,8 @@ Bundle-ClassPath: .,
  lib/tomcat-coyote-ffm.jar,
  lib/ecj-4.36.jar,
  lib/jakartaee-migration-1.0.9-shaded.jar
-Export-Package: org.apache.catalina.servlets;version="11.0.8",
- org.apache.jasper.servlet;version="11.0.8";
+Export-Package: org.apache.catalina.servlets;version="11.0.11",
+ org.apache.jasper.servlet;version="11.0.11";
   uses:="jakarta.servlet.http,
    org.apache.tomcat.util.descriptor.tld,
    jakarta.servlet.jsp.tagext,
@@ -52,8 +52,8 @@ Export-Package: org.apache.catalina.servlets;version="11.0.8",
    jakarta.servlet.descriptor,
    org.apache.jasper.compiler,
    org.apache.jasper.util",
- org.apache.naming;version="11.0.8",
- org.apache.tomcat.starter;version="11.0.8";uses:="org.osgi.framework"
+ org.apache.naming;version="11.0.11",
+ org.apache.tomcat.starter;version="11.0.11";uses:="org.osgi.framework"
 Import-Package: jakarta.el;version="[6.0.0,7.0.0)",
  jakarta.servlet;version="[6.1.0,7.0.0)",
  jakarta.servlet.annotation;version="[6.1.0,7.0.0)",
