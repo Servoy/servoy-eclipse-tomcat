@@ -7,8 +7,15 @@ pipeline {
         buildDiscarder(logRotator(daysToKeepStr: '10', numToKeepStr: '10'))
     }
     
-    triggers {
-        githubPush()
+   triggers {
+        GenericTrigger(
+            genericVariables: [
+                [key: 'ref', value: '$.ref']
+            ],
+            token: 'tomcat',
+            regexpFilterText: '$ref',
+            regexpFilterExpression: "^refs/heads/${env.BRANCH}\$"
+        )
     }
     
     parameters {
@@ -25,12 +32,7 @@ pipeline {
     }
     
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-        stage('Build with Tycho 5') {
+        stage('Build with Tycho') {
             steps {
                 configFileProvider([
                     configFile(fileId: 'ba7b9372-76e5-4898-a2be-1dde60a0d6e3', variable: 'MAVEN_SETTINGS'),
