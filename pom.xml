@@ -61,12 +61,16 @@
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-compiler-plugin</artifactId>
                 <version>${tycho.version}</version>
+                <configuration>
+                    <useJDK>SYSTEM</useJDK>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>target-platform-configuration</artifactId>
                 <version>${tycho.version}</version>
                 <configuration>
+                    <executionEnvironment>JavaSE-21</executionEnvironment>
                     <pomDependencies>consider</pomDependencies>
                     <dependency-resolution>
                         <optionalDependencies>ignore</optionalDependencies>
