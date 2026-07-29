@@ -18,6 +18,7 @@ package org.apache.tomcat.starter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Set;
 
 import org.apache.catalina.Container;
@@ -93,8 +94,16 @@ public class TomcatStartStop
 									StandardContext sc = (StandardContext)container;
 									sc.filterStop();
 									ServletContext context = sc.getServletContext();
-									ServerContainer serverContainer = (ServerContainer)context.getAttribute("jakarta.websocket.server.ServerContainer");
-									Set<ServletInstance> servletInstances = Activator.getActivator().getServletInstances(context.getContextPath());
+								ServerContainer serverContainer = (ServerContainer)context.getAttribute("jakarta.websocket.server.ServerContainer");
+								Set<ServletInstance> servletInstances = Collections.emptySet();
+									try
+									{
+										servletInstances = Activator.getActivator().getServletInstances(context.getContextPath());
+									}
+									catch (Exception e)
+									{
+										System.err.println("Tomcat: failed to get servlet instances for context '" + context.getContextPath() + "': " + e.getMessage());
+									}
 									for (ServletInstance servletInstance : servletInstances)
 									{
 										try
@@ -114,13 +123,21 @@ public class TomcatStartStop
 										}
 									}
 
-									Set<Class< ? >> annotatedClasses = Activator.getActivator().getAnnotatedClasses(context.getContextPath());
-									for (Class< ? > cls : annotatedClasses)
+								Set<Class< ? >> annotatedClasses = Collections.emptySet();
+								try
+								{
+									annotatedClasses = Activator.getActivator().getAnnotatedClasses(context.getContextPath());
+								}
+								catch (Exception e)
+								{
+									System.err.println("Tomcat: failed to get annotated classes for context '" + context.getContextPath() + "': " + e.getMessage());
+								}
+								for (Class< ? > cls : annotatedClasses)
+								{
+									ServerEndpoint serverEndpoint = cls.getAnnotation(ServerEndpoint.class);
+									if (serverEndpoint != null)
 									{
-										ServerEndpoint serverEndpoint = cls.getAnnotation(ServerEndpoint.class);
-										if (serverEndpoint != null)
-										{
-											try
+										try
 											{
 												String path = serverEndpoint.value();
 
@@ -160,12 +177,12 @@ public class TomcatStartStop
 												e.printStackTrace();
 											}
 										}
-										else
+									else
+									{
+										WebFilter webFilter = cls.getAnnotation(WebFilter.class);
+										if (webFilter != null)
 										{
-											WebFilter webFilter = cls.getAnnotation(WebFilter.class);
-											if (webFilter != null)
-											{
-												String name = webFilter.filterName();
+											String name = webFilter.filterName();
 												if (name == null || name.equals("")) name = cls.getName();
 												try
 												{
