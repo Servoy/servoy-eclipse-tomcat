@@ -70,9 +70,16 @@ public class Activator implements BundleActivator
 		{
 			for (IExtension extension : extensions)
 			{
-				IServicesProvider provider = (IServicesProvider)extension.getConfigurationElements()[0].createExecutableExtension("class");
-				provider.registerServices();
-				serviceProviders.add(provider);
+				try
+				{
+					IServicesProvider provider = (IServicesProvider)extension.getConfigurationElements()[0].createExecutableExtension("class");
+					provider.registerServices();
+					serviceProviders.add(provider);
+				}
+				catch (Exception e)
+				{
+					System.err.println("Tomcat: failed to load service provider from " + extension.getContributor().getName() + ": " + e.getMessage());
+				}
 			}
 		}
 
@@ -82,8 +89,15 @@ public class Activator implements BundleActivator
 		{
 			for (IExtension extension : extensions)
 			{
-				ITomcatStartedListener startedListener = (ITomcatStartedListener)extension.getConfigurationElements()[0].createExecutableExtension("class");
-				startedListeners.add(startedListener);
+				try
+				{
+					ITomcatStartedListener startedListener = (ITomcatStartedListener)extension.getConfigurationElements()[0].createExecutableExtension("class");
+					startedListeners.add(startedListener);
+				}
+				catch (Exception e)
+				{
+					System.err.println("Tomcat: failed to load started listener from " + extension.getContributor().getName() + ": " + e.getMessage());
+				}
 			}
 		}
 	}
@@ -93,8 +107,15 @@ public class Activator implements BundleActivator
 		Set<Class< ? >> classes = new HashSet<Class< ? >>();
 		for (IServicesProvider serviceProvider : serviceProviders)
 		{
-			Set<Class< ? >> annotatedClasses = serviceProvider.getAnnotatedClasses(ctx);
-			if (annotatedClasses != null) classes.addAll(annotatedClasses);
+			try
+			{
+				Set<Class< ? >> annotatedClasses = serviceProvider.getAnnotatedClasses(ctx);
+				if (annotatedClasses != null) classes.addAll(annotatedClasses);
+			}
+			catch (Exception e)
+			{
+				System.err.println("Tomcat: failed to get annotated classes from " + serviceProvider.getClass().getName() + ": " + e.getMessage());
+			}
 		}
 		return classes;
 	}
@@ -107,11 +128,17 @@ public class Activator implements BundleActivator
 		Set<ServletInstance> instances = new HashSet<ServletInstance>();
 		for (IServicesProvider serviceProvider : serviceProviders)
 		{
-			Set<ServletInstance> spInstances = serviceProvider.getServletInstances(ctx);
-			if (spInstances != null) instances.addAll(spInstances);
+			try
+			{
+				Set<ServletInstance> spInstances = serviceProvider.getServletInstances(ctx);
+				if (spInstances != null) instances.addAll(spInstances);
+			}
+			catch (Exception e)
+			{
+				System.err.println("Tomcat: failed to get servlet instances from " + serviceProvider.getClass().getName() + ": " + e.getMessage());
+			}
 		}
 		return instances;
-
 	}
 
 	/**
