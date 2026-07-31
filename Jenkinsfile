@@ -35,7 +35,7 @@ pipeline {
         stage('Build with Tycho') {
             steps {
                 configFileProvider([
-                    configFile(fileId: 'ba7b9372-76e5-4898-a2be-1dde60a0d6e3', variable: 'MAVEN_SETTINGS'),
+                    configFile(fileId: 'master_mvn_repo', variable: 'MAVEN_SETTINGS'),
                     configFile(fileId: 'maven_toolchain', variable: 'TOOLCHAIN')
                 ]) {
                     sh 'mvn -B -s "$MAVEN_SETTINGS" -t "$TOOLCHAIN" $goals'
